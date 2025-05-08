@@ -374,6 +374,27 @@ VNN: id_usuario, id_tarea
 FK: id_usuario referencia a Usuario(id)
 Fk: id_tarea referencia a Tarea(id)
 ```
+
+### Paso a Base de Datos NoSql
+
+Para poder trabajar con Firebase, con su aplicación para bases de datos Firestore Database, tenemos que adaptar nuestro diseño a una colección NoSql
+
+De esta forma tendremos dos colecciones, una para los usuarios y otra para las notificaciones
+
+Inicialmente tendremos las dos colecciones vacías en Cloud Firestore
+
+![](./img/colecciones_Firebase_vacias.jpg)
+
+Los documentos se crean desde la APP.
+
+La colección para los usuarios tendrá el siguiente aspecto:
+
+![](./img/coleccion_usuario.jpg)
+
+La colección para las notificaciones tendrá el siguiente aspecto:
+
+![](./img/coleccion_notificacion.jpg)
+
 ### Mapa Web. Gráfico que muestra los enlaces entre páginas.
 ### Mockups
 

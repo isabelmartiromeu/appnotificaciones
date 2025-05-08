@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Proyecto Fin de Ciclo de DAM | APP de Gestión de Tareas multi usuario. Sincronización de SQLite con la Nube. Interacción con API</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Proyecto Fin de Ciclo de DAM" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="APP de Gestión de Tareas multi usuario. Sincronización de SQLite con la Nube. Interacción con API" />
+<meta property="og:description" content="APP de Gestión de Tareas multi usuario. Sincronización de SQLite con la Nube. Interacción con API" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="Proyecto Fin de Ciclo de DAM" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Proyecto Fin de Ciclo de DAM" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","description":"APP de Gestión de Tareas multi usuario. Sincronización de SQLite con la Nube. Interacción con API","headline":"Proyecto Fin de Ciclo de DAM","name":"Proyecto Fin de Ciclo de DAM","url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="https://code.jquery.com/jquery-3.3.0.min.js" integrity="sha256-RTQy8VOmNlT6b2PIRur37p6JEBZUE7o8wPgMvu18MC4=" crossorigin="anonymous"></script>
+    <script src="/assets/js/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Proyecto Fin de Ciclo de DAM</h1>
+        <p>APP de Gestión de Tareas multi usuario. Sincronización de SQLite con la Nube. Interacción con API</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="" class="button fork"><strong>View On GitHub</strong></a>
+        
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1 id="app-gestión-de-tareas-multiusuario-con-recordatorios">APP Gestión de Tareas Multiusuario con Recordatorios</h1>
+
+<p><img src="./img/agenda.webp" alt="" /></p>
+
+<p><strong>Realizado por:</strong> <em>Isabel Martí Romeu</em></p>
+
+<p style="float: right; margin-right: 20px;">
+  <img src="./img/logo_ceedcv.png" alt="Descripción de la imagen" style="width: 170px; height: 100px; object-fit: contain;" />
+</p>
+
+<p><strong>Centro:</strong> CEEDV</p>
+
+<p><strong>Ciclo:</strong> DAM</p>
+
+<p><strong>Curso:</strong> Segundo</p>
+
+<p><strong>Periodo:</strong> Junio</p>
+
+<p><strong>Tutor individual:</strong> Mara Vaño Alonso.</p>
+
+<h2 id="introducción">Introducción</h2>
+<p>Este proyecto trata de programar una APP multi usuario, con control de acceso y tareas compartidas.
+A través de ella se podrá realizar:</p>
+<ul>
+  <li>Gestión de Tareas: Los usuarios podrán agregar, editar, eliminar y marcar tareas como completadas, así como compartir tareas con otros usuarios.
+Notificaciones y Recordatorios: Los usuarios podrán establecer recordatorios para tareas específicas.</li>
+  <li>Sincronización con la Nube: Las tareas se sincronizarán en un servidor de base de datos en la nube, para que los usuarios puedan ver las tareas compartidas sin problemas.</li>
+  <li>Base de Datos Local en SQLite: Almacena las tareas localmente en el dispositivo usando SQLite y se sincronizan con la nube con FIrebase Firestore.</li>
+  <li>Interacción con API: La aplicación puede hacer uso de una API para obtener información adicional (por ejemplo, mostrar citas inspiradoras).</li>
+</ul>
+
+<h2 id="estado-del-arte">Estado del arte</h2>
+<p>Este tipo de aplicaciones tiene una gran demanda en sectores que requieren un seguimiento eficiente de actividades, como proyectos personales, laborales y educativos. La siguiente sección presenta una revisión de los principales avances tecnológicos, marcos de trabajo y enfoques utilizados en el desarrollo de aplicaciones móviles similares, con especial énfasis en el uso de Kotlin, Firebase, y SQLite.</p>
+
+<p><strong>Aplicaciones de Gestión de Tareas</strong></p>
+
+<p>Las aplicaciones de gestión de tareas son fundamentales para la organización de actividades diarias, tanto a nivel personal como colaborativo. Algunas de las aplicaciones más populares en este ámbito incluyen Todoist, Trello, Microsoft To Do, y Google Keep. Estas aplicaciones permiten a los usuarios crear, editar, eliminar, organizar y compartir tareas de forma eficiente. Además, suelen incluir funcionalidades como la asignación de fechas de vencimiento, la creación de recordatorios, y la posibilidad de categorizar tareas mediante etiquetas o proyectos.</p>
+
+<p><strong>Características comunes de estas aplicaciones:</strong></p>
+
+<ul>
+  <li>
+    <p>Gestión de tareas: Creación, edición, eliminación y marcado de tareas como completadas.</p>
+  </li>
+  <li>
+    <p>Tareas compartidas: Capacidad de compartir tareas o proyectos con otros usuarios.</p>
+  </li>
+  <li>
+    <p>Notificaciones y recordatorios: Los usuarios pueden recibir notificaciones en tiempo real para recordarles las tareas pendientes.</p>
+  </li>
+  <li>
+    <p>Sincronización en la nube: Sincronización de datos en tiempo real a través de servidores en la nube, lo que permite la accesibilidad desde varios dispositivos.</p>
+  </li>
+</ul>
+
+<h2 id="estudio-de-viabilidad-método-dafo">Estudio de viabilidad. Método DAFO.</h2>
+
+<p><strong>Análisis DAFO (FODA)</strong></p>
+
+<p>El análisis DAFO permite identificar las fortalezas, debilidades, oportunidades y amenazas del proyecto para el desarrollo de la aplicación de gestión de tareas.</p>
+
+<p><em>Fortalezas</em></p>
+
+<ul>
+  <li>
+    <p>Uso de tecnologías modernas: El uso de Kotlin y Firebase permite desarrollar una aplicación eficiente y escalable, aprovechando las mejores herramientas disponibles en la plataforma Android.</p>
+  </li>
+  <li>
+    <p>Sincronización en tiempo real: La integración de Firebase Firestore garantiza que los usuarios tengan acceso a datos actualizados y colaboren en tiempo real.</p>
+  </li>
+  <li>
+    <p>Autenticación segura: Firebase Authentication proporciona un sistema de control de acceso robusto y fácil de implementar.</p>
+  </li>
+  <li>
+    <p>Funcionalidad fuera de línea: SQLite asegura que los usuarios puedan gestionar tareas incluso sin conexión a Internet.</p>
+  </li>
+</ul>
+
+<p><em>Debilidades</em></p>
+
+<ul>
+  <li>
+    <p>Dependencia de servicios externos: La dependencia de Firebase para la base de datos y la autenticación puede generar costos adicionales y problemas si los servicios de Firebase experimentan fallos o cambios en su política de precios.</p>
+  </li>
+  <li>
+    <p>Compatibilidad con dispositivos antiguos: La aplicación requiere dispositivos con Android 5.0 o superior, lo que podría limitar el número de usuarios si no se considera bien la compatibilidad con versiones anteriores.</p>
+  </li>
+  <li>
+    <p>Complejidad en la gestión de datos sincronizados: La sincronización de datos entre dispositivos puede generar errores si no se gestiona correctamente la lógica de conflicto de datos.</p>
+  </li>
+</ul>
+
+<p><em>Oportunidades</em></p>
+
+<ul>
+  <li>
+    <p>Creciente demanda de herramientas de productividad: Existe una creciente demanda de aplicaciones que ayuden a los usuarios a organizar y gestionar sus tareas de manera efectiva, especialmente en un entorno laboral remoto o colaborativo.</p>
+  </li>
+  <li>
+    <p>Expansión a nuevas plataformas: La aplicación podría expandirse a otras plataformas como iOS, aumentando su alcance y base de usuarios.</p>
+  </li>
+  <li>
+    <p>Implementación de funciones avanzadas: Se pueden agregar características adicionales como la gestión de proyectos, integración con otras aplicaciones de productividad, o un sistema de análisis del rendimiento de las tareas.</p>
+  </li>
+</ul>
+
+<p><em>Amenazas</em></p>
+
+<ul>
+  <li>
+    <p>Competencia intensa: Existen muchas aplicaciones de gestión de tareas bien establecidas en el mercado (como Todoist, Trello, Microsoft To Do), lo que puede dificultar la captación de usuarios.</p>
+  </li>
+  <li>
+    <p>Cambio en políticas de servicios externos: Los cambios en los precios o en las condiciones de uso de servicios como Firebase o AdMob podrían afectar la rentabilidad o funcionalidad de la aplicación.</p>
+  </li>
+  <li>
+    <p>Problemas de privacidad y seguridad: Dado que la aplicación manejará datos personales, un problema de seguridad o una filtración de datos podría dañar la reputación de la aplicación.</p>
+  </li>
+</ul>
+
+<h3 id="estudio-de-mercado">Estudio de mercado</h3>
+
+<h4 id="viabilidad-técnicaeconómica-del-proyecto">Viabilidad técnica/económica del proyecto</h4>
+<p>El siguiente análisis permitirá tomar decisiones sobre la viabilidad del proyecto y su posible ejecución.</p>
+
+<p><em><strong>Viabilidad Técnica</strong></em></p>
+
+<p>Es la capacidad de implementar la aplicación con las tecnologías disponibles e integrar todos los componentes necesarios para su funcionamiento.</p>
+
+<p>a) Tecnologías a utilizar</p>
+
+<p><strong>Lenguaje de programación:</strong> Kotlin, el lenguaje oficial para el desarrollo de aplicaciones Android, es adecuado debido a su simplicidad, rendimiento y fuerte soporte por parte de Google.</p>
+
+<p><strong>Base de datos:</strong></p>
+
+<ul>
+  <li><strong>SQLite:</strong> Para el almacenamiento local de tareas, permite mantener una copia local de las tareas en el dispositivo, incluso sin conexión a Internet.</li>
+  <li><strong>Firebase Firestore:</strong> Como base de datos en la nube para la sincronización en tiempo real de las tareas entre dispositivos, facilitando la colaboración entre usuarios.</li>
+</ul>
+
+<p><strong>Notificaciones y recordatorios:</strong></p>
+<ul>
+  <li><strong>Firebase Cloud Messaging (FCM):</strong> Para implementar notificaciones push en tiempo real.</li>
+  <li><strong>AlarmManager de Android:</strong> Para programar recordatorios de tareas y establecer alarmas.</li>
+</ul>
+
+<p><strong>Autenticación de usuarios:</strong> Firebase Authentication proporcionará el control de acceso y la seguridad en el inicio de sesión.</p>
+
+<p>b) Requerimientos técnicos.</p>
+
+<ul>
+  <li>
+    <p><strong>Dispositivos compatibles:</strong> La aplicación será compatible con dispositivos Android que cuenten con Android 5.0 (Lollipop) o superior.</p>
+  </li>
+  <li>
+    <p><strong>Conexión a Internet:</strong> Aunque la aplicación funcionará de forma local a través de SQLite, la sincronización de tareas en la nube requerirá conexión a Internet.</p>
+  </li>
+  <li>
+    <p><strong>Desarrollo y pruebas:</strong> El desarrollo se llevará a cabo en Android Studio con Kotlin. Las pruebas incluirán validaciones de funcionalidad, pruebas de usabilidad y control de errores.</p>
+  </li>
+</ul>
+
+<p>c) Complejidad Técnica</p>
+
+<p>El proyecto implica una complejidad moderada debido a la integración de varias tecnologías:</p>
+
+<ul>
+  <li>Sincronización en tiempo real entre la base de datos local y la base de datos en la nube.</li>
+  <li>Implementación de un sistema de notificaciones push eficiente.</li>
+  <li>Gestión de múltiples usuarios con control de acceso.</li>
+</ul>
+
+<p>Sin embargo, las herramientas y bibliotecas modernas disponibles (Firebase, SQLite, Kotlin) hacen que esta complejidad sea manejable.</p>
+
+<p><em><strong>Viabilidad económica</strong></em></p>
+
+<p>En este apartado se pretende analizar el coste asociado al desarrollo, mantenimiento y posibles ingresos generados por la aplicación.</p>
+
+<p>a) Costos Iniciales
+Los costos iniciales incluyen:</p>
+
+<ul>
+  <li>
+    <p>Desarrollo de la aplicación: Los costos de contratación de desarrolladores (si no se realiza internamente) y herramientas de desarrollo como Android Studio (que es gratuita).</p>
+  </li>
+  <li>
+    <p>Licencias de software: Firebase ofrece un plan gratuito con limitaciones. Es posible que a medida que la aplicación crezca, se requieran planes de pago para mayor capacidad de almacenamiento y número de usuarios.</p>
+  </li>
+  <li>
+    <p>Pruebas y calidad: Contratación de testers para asegurar el correcto funcionamiento de la aplicación.</p>
+  </li>
+  <li>
+    <p>Marketing y promoción: Presupuesto para campañas de marketing en Google Ads, redes sociales, o colaboraciones.</p>
+  </li>
+</ul>
+
+<p>b) Costos Operativos</p>
+
+<ul>
+  <li>
+    <p>Mantenimiento de servidores en la nube: El uso de Firebase tiene un coste asociado según el volumen de datos y el número de usuarios. A medida que la aplicación crece, se podría necesitar un plan de pago en Firebase.</p>
+  </li>
+  <li>
+    <p>Actualizaciones y mejoras: Se deben presupuestar las actualizaciones periódicas de la aplicación, tanto para mantenerla compatible con las nuevas versiones de Android como para incorporar nuevas funcionalidades.</p>
+  </li>
+</ul>
+
+<p>c) Posibles Fuentes de Ingresos</p>
+
+<ul>
+  <li>
+    <p>Publicidad: Integrar anuncios dentro de la aplicación utilizando plataformas como Google AdMob.</p>
+  </li>
+  <li>
+    <p>Modelo Freemium: Ofrecer una versión gratuita con funciones limitadas y una versión premium con características adicionales, como más espacio de almacenamiento o funciones avanzadas de colaboración.</p>
+  </li>
+  <li>
+    <p>Suscripciones: Los usuarios podrían pagar una suscripción mensual o anual para acceder a características premium, como la personalización avanzada o una mayor capacidad de gestión de tareas.</p>
+  </li>
+</ul>
+
+<p><strong>Recursos Hardware</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Recurso</th>
+      <th>Costo Estimado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Portátil de Desarrollo</td>
+      <td>900 - 1,800 EUR por unidad</td>
+    </tr>
+    <tr>
+      <td>Teléfonos Android (para pruebas)</td>
+      <td>140 - 700 EUR por unidad</td>
+    </tr>
+    <tr>
+      <td>Tabletas Android (para pruebas)</td>
+      <td>180 - 550 EUR por unidad</td>
+    </tr>
+    <tr>
+      <td>Servidores (si no se usa la nube)</td>
+      <td>45 - 450 EUR mensuales (si se usan servidores)</td>
+    </tr>
+    <tr>
+      <td>Periféricos</td>
+      <td>140 - 450 EUR por unidad</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Recursos Software</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Recurso</th>
+      <th>Costo Estimado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Android Studio</td>
+      <td>Gratuito</td>
+    </tr>
+    <tr>
+      <td>Kotlin</td>
+      <td>Gratuito</td>
+    </tr>
+    <tr>
+      <td>Firebase</td>
+      <td>Gratuito en el plan básico; 25 - 180 EUR mensuales en planes de pago</td>
+    </tr>
+    <tr>
+      <td>API Externas</td>
+      <td>0 - 45+ EUR mensuales</td>
+    </tr>
+    <tr>
+      <td>Herramientas de Diseño (Adobe XD, Figma, etc.)</td>
+      <td>0 - 45 EUR mensuales</td>
+    </tr>
+    <tr>
+      <td>Herramientas de Pruebas (Firebase Test Lab, etc.)</td>
+      <td>0 - 45 EUR mensuales</td>
+    </tr>
+    <tr>
+      <td>Publicidad (Google Ads, Facebook Ads)</td>
+      <td>90 - 900+ EUR mensuales</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Recursos Hardware</strong></p>
+
+<p>Debido a que es un Proyecto fin de Ciclo, solamente contamos con una persona para desarrollar la aplicación</p>
+
+<h4 id="viabilidad-temporal">Viabilidad temporal</h4>
+
+<p>Para evaluar la viabilidad temporal, es necesario establecer un cronograma detallado que contemple todas las actividades clave en el proceso de desarrollo de la aplicación. Este cronograma debe ser realista, teniendo en cuenta los recursos disponibles (equipo de trabajo, herramientas y presupuesto).</p>
+
+<p><strong>Factores a Considerar para la Viabilidad Temporal</strong></p>
+
+<ul>
+  <li>
+    <p>Recursos Disponibles: El tiempo estimado puede variar según el tamaño del equipo de desarrollo y la disponibilidad de los recursos. Si el equipo es pequeño o si los desarrolladores están dedicando tiempo parcial al proyecto, los tiempos de desarrollo podrían alargarse.</p>
+  </li>
+  <li>
+    <p>Complejidad del Proyecto: La integración de tecnologías como Firebase y la sincronización de datos en tiempo real puede generar desafíos adicionales, lo que puede retrasar el desarrollo si surgen problemas técnicos imprevistos.</p>
+  </li>
+  <li>
+    <p>Pruebas y Corrección de Errores: Las fases de pruebas pueden extenderse si se detectan problemas significativos en la funcionalidad o en la experiencia del usuario, lo que podría requerir un tiempo adicional para corregir.</p>
+  </li>
+  <li>
+    <p>Factores Externos: El proceso de aprobación de Google Play para la publicación de la aplicación podría llevar tiempo, especialmente si se requieren revisiones adicionales o correcciones en la aplicación.</p>
+  </li>
+</ul>
+
+<h3 id="planificación-temporal-o-agenda-de-trabajo">Planificación temporal o agenda de trabajo.</h3>
+
+<p>Se va a desarrollar un estudio de las fases en un entorno de trabajo real, aunque no se vayan a desarrollar por completo.</p>
+
+<p><strong>Fases de Desarrollo de la Aplicación</strong></p>
+
+<p>El proceso de desarrollo de la aplicación de gestión de tareas se puede dividir en varias fases principales.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fase</th>
+      <th>Duración Estimada</th>
+      <th>Fecha de Inicio</th>
+      <th>Fecha de Finalización</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Planificación y Diseño</td>
+      <td>1-2 meses</td>
+      <td>1 de abril 2025</td>
+      <td>31 de mayo 2025</td>
+    </tr>
+    <tr>
+      <td>Desarrollo Inicial</td>
+      <td>2-3 meses</td>
+      <td>1 de junio 2025</td>
+      <td>31 de agosto 2025</td>
+    </tr>
+    <tr>
+      <td>Pruebas y Ajustes</td>
+      <td>1-2 meses</td>
+      <td>1 de septiembre 2025</td>
+      <td>31 de octubre 2025</td>
+    </tr>
+    <tr>
+      <td>Lanzamiento y Marketing</td>
+      <td>1 mes</td>
+      <td>1 de noviembre 2025</td>
+      <td>30 de noviembre 2025</td>
+    </tr>
+    <tr>
+      <td>Monitoreo Post-Lanzamiento</td>
+      <td>1 semana</td>
+      <td>1 de diciembre 2025</td>
+      <td>7 de diciembre 2025</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Conclusión sobre la Viabilidad Temporal</strong></p>
+
+<p>El proyecto tiene una viabilidad temporal razonable si se siguen los plazos establecidos y se cuenta con los recursos necesarios. Se estima que el desarrollo de la aplicación podría completarse en 6 a 8 meses desde el inicio hasta el lanzamiento, considerando las pruebas y el marketing inicial.</p>
+
+<p>Dado que solamente se dispone de una persona para el desarrollo de la aplicación, a tiempo parcial, habrá fases que no se lleven a cabo.</p>
+
+<p>Se implementará el MVP (Producto Mínimo Viable).</p>
+
+<h2 id="análisis-de-requisitos">Análisis de requisitos</h2>
+
+<ol>
+  <li>Requisitos Funcionales</li>
+</ol>
+
+<p>Los requisitos funcionales definen las funciones específicas que la aplicación debe realizar. En este caso, se enfoca en la gestión de tareas y la interacción entre los usuarios.</p>
+
+<p>1.1. Gestión de Tareas</p>
+
+<ul>
+  <li>
+    <p>Agregar tareas: Los usuarios podrán añadir nuevas tareas a la aplicación, con los siguientes campos:</p>
+
+    <ul>
+      <li>
+        <p>Título de la tarea.</p>
+      </li>
+      <li>
+        <p>Descripción (opcional).</p>
+      </li>
+      <li>
+        <p>Fecha de vencimiento (opcional).</p>
+      </li>
+      <li>
+        <p>Prioridad (opcional).</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Editar tareas: Los usuarios podrán editar las tareas existentes, modificando cualquiera de los campos mencionados anteriormente.</p>
+  </li>
+  <li>
+    <p>Eliminar tareas: Los usuarios podrán eliminar tareas que ya no deseen conservar.</p>
+  </li>
+  <li>
+    <p>Marcar tareas como completadas: Los usuarios podrán marcar las tareas como completadas, lo que cambiará el estado de la tarea y la marcará visualmente en la lista.</p>
+  </li>
+  <li>
+    <p>Filtrar tareas: Los usuarios podrán filtrar las tareas por fecha de vencimiento, prioridad y estado (completada/no completada).</p>
+  </li>
+</ul>
+
+<p>1.2. Tareas Compartidas</p>
+
+<ul>
+  <li>
+    <p>Compartir tareas: Los usuarios podrán compartir tareas con otros usuarios, proporcionando acceso a tareas específicas a través de un sistema de control de permisos.</p>
+  </li>
+  <li>
+    <p>Visualización de tareas compartidas: Los usuarios podrán ver las tareas que les han sido compartidas, y, si tienen permisos, también podrán editarlas o completarlas.</p>
+  </li>
+</ul>
+
+<p>1.3. Notificaciones y Recordatorios</p>
+
+<ul>
+  <li>
+    <p>Recordatorios de tareas: Los usuarios podrán establecer recordatorios para las tareas. Los recordatorios deben enviarse en forma de notificación push en el momento seleccionado.</p>
+  </li>
+  <li>
+    <p>Notificaciones push: Los usuarios recibirán notificaciones sobre actualizaciones de tareas compartidas, vencimientos de tareas y recordatorios establecidos.</p>
+  </li>
+</ul>
+
+<p>1.4. Control de Acceso</p>
+
+<ul>
+  <li>
+    <p>Autenticación de usuarios: Los usuarios deberán registrarse e iniciar sesión para acceder a la aplicación. Se implementará un sistema de autenticación utilizando Firebase Authentication.</p>
+  </li>
+  <li>
+    <p>Roles y permisos: Cada usuario podrá tener permisos específicos sobre las tareas que son compartidas con ellos (por ejemplo, solo visualizar o también editar).</p>
+  </li>
+</ul>
+
+<p>1.5. Sincronización en la Nube</p>
+
+<ul>
+  <li>
+    <p>Sincronización de tareas: Las tareas se almacenarán en una base de datos local en el dispositivo (SQLite) y se sincronizarán con la nube usando Firebase Firestore para asegurar que las tareas estén disponibles en múltiples dispositivos de forma coherente.</p>
+  </li>
+  <li>
+    <p>Sincronización en tiempo real: Las actualizaciones realizadas por un usuario deben reflejarse en tiempo real en todos los dispositivos que tengan acceso a la tarea compartida.</p>
+  </li>
+</ul>
+
+<ol>
+  <li>Requisitos No Funcionales</li>
+</ol>
+
+<p>Los requisitos no funcionales especifican las cualidades y características generales que la aplicación debe cumplir, tales como el rendimiento, la seguridad y la usabilidad.</p>
+
+<p>2.1. Rendimiento</p>
+
+<ul>
+  <li>
+    <p>Tiempo de respuesta: La aplicación debe ser capaz de agregar, editar, eliminar y sincronizar tareas con tiempos de respuesta mínimos (menos de 2 segundos para la mayoría de las interacciones).</p>
+  </li>
+  <li>
+    <p>Rendimiento de la sincronización: La sincronización con la nube debe ser rápida y eficiente, sin causar retrasos perceptibles en la experiencia de usuario.</p>
+  </li>
+  <li>
+    <p>Soporte para múltiples usuarios: La aplicación debe ser capaz de gestionar múltiples usuarios y tareas de forma eficiente, incluso si un gran número de usuarios está utilizando la aplicación simultáneamente.</p>
+  </li>
+</ul>
+
+<p>2.2. Usabilidad</p>
+
+<ul>
+  <li>
+    <p>Interfaz amigable: La interfaz de usuario debe ser intuitiva y fácil de usar. Debe permitir la navegación rápida entre las diferentes pantallas y opciones.</p>
+  </li>
+  <li>
+    <p>Diseño adaptativo: La aplicación debe ser completamente funcional tanto en teléfonos como en tabletas, con una interfaz que se adapte al tamaño de la pantalla.</p>
+  </li>
+  <li>
+    <p>Accesibilidad: Se deben incorporar características de accesibilidad, como compatibilidad con lectores de pantalla y un diseño adecuado para personas con discapacidad visual o motriz.</p>
+  </li>
+</ul>
+
+<p>2.3. Seguridad</p>
+
+<ul>
+  <li>
+    <p>Protección de datos: La aplicación debe asegurar la confidencialidad de los datos de los usuarios, tanto en reposo como en tránsito. La autenticación debe ser segura, utilizando tecnologías como Firebase Authentication con medidas de seguridad como autenticación en dos pasos.</p>
+  </li>
+  <li>
+    <p>Cifrado de comunicaciones: Todas las comunicaciones con Firebase y otros servicios externos deben estar cifradas utilizando HTTPS para prevenir interceptaciones.</p>
+  </li>
+</ul>
+
+<p>2.4. Escalabilidad</p>
+
+<ul>
+  <li>Capacidad de escalar: La infraestructura de backend debe ser capaz de manejar un crecimiento en el número de usuarios sin que esto afecte el rendimiento de la aplicación. Firebase Firestore debe ser capaz de manejar la cantidad de datos y usuarios sin problemas.</li>
+</ul>
+
+<p>3.Requisitos Técnicos</p>
+
+<p>Los requisitos técnicos detallan las tecnologías, herramientas y plataformas que se utilizarán para desarrollar y ejecutar la aplicación.</p>
+
+<p>3.1. Plataforma de Desarrollo</p>
+
+<p>Android Studio como entorno de desarrollo principal.</p>
+
+<p>Lenguaje de programación Kotlin para la implementación de la lógica de la aplicación.</p>
+
+<p>3.2. Base de Datos</p>
+
+<ul>
+  <li>
+    <p>Base de datos local: SQLite se utilizará para almacenar las tareas localmente en el dispositivo cuando no haya conexión a Internet.</p>
+  </li>
+  <li>
+    <p>Base de datos en la nube: Firebase Firestore se usará para almacenar las tareas de manera remota y permitir la sincronización entre dispositivos.</p>
+  </li>
+</ul>
+
+<p>3.3. Integración con Firebase</p>
+
+<ul>
+  <li>
+    <p>Autenticación: Se implementará Firebase Authentication para permitir que los usuarios se registren y accedan de forma segura.</p>
+  </li>
+  <li>
+    <p>Base de datos en la nube: Firebase Firestore se utilizará para almacenar y sincronizar las tareas.</p>
+  </li>
+  <li>
+    <p>Notificaciones: Firebase Cloud Messaging (FCM) se integrará para gestionar las notificaciones push y los recordatorios.</p>
+  </li>
+</ul>
+
+<p>3.4. API Externa</p>
+
+<p>Interacción con API externa: La aplicación hará uso de una API externa para obtener citas inspiradoras que amplíen la experiencia de usuario.</p>
+
+<h2 id="diseño">Diseño</h2>
+
+<p>Para describir la base de datos se va a utilizar la notación Yourdon, DeMarco.</p>
+
+<h3 id="diseño-conceptual-entidad-relación">Diseño Conceptual Entidad Relación.</h3>
+
+<p><img src="./img/DE-R.png" alt="" /></p>
+
+<p>Un usuario puede realizar muchas tareas y una tarea puede ser realizada por varios usuarios.</p>
+
+<h3 id="diseño-lógico-relacional-o-paso-a-tablas">Diseño Lógico Relacional o Paso a tablas.</h3>
+
+<p><img src="./img/DRelacional.png" alt="" /></p>
+
+<h3 id="diseño-físico-o-diagrama-mysql-descripción-de-las-tablas-y-campos">Diseño Físico o Diagrama Mysql. Descripción de las tablas y campos.</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usuario:{id:INTEGER(4), nom_usu:VARCHAR(20), password:VARCHAR(20), email:VARCHAR(30), nombre:VARCHAR(20), apellido1:VARCHAR(20), apellido2:VARCHAR(20)}
+Pk: id
+Uk: nom_usu
+Uk: email
+VNN: nom_usu, password, email, nombre, apellido1
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Tarea:{id: INTEGER(8), nombre:VARCHAR(20), descripcion:TEXT, fecha:DATE, hora_ini:TIME, hora_fin:TIME}
+Pk: id
+VNN: nombre, fecha, hora_ini
+Uk: nombre
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usuario_tarea:{id_usuario:INTEGER(4), id_tarea:INTEGER(8)}
+Pk:{id_usuario,id_tarea}
+VNN: id_usuario, id_tarea
+FK: id_usuario referencia a Usuario(id)
+Fk: id_tarea referencia a Tarea(id)
+</code></pre></div></div>
+<h3 id="mapa-web-gráfico-que-muestra-los-enlaces-entre-páginas">Mapa Web. Gráfico que muestra los enlaces entre páginas.</h3>
+<h3 id="mockups">Mockups</h3>
+
+<h2 id="codificación">Codificación</h2>
+<h3 id="tecnologías-elegidas-y-su-justificación">Tecnologías elegidas y su justificación.</h3>
+<h3 id="entorno-servidor">Entorno servidor.</h3>
+<h3 id="entorno-cliente">Entorno cliente.</h3>
+<h3 id="documentación-interna-de-código">Documentación interna de código</h3>
+<h3 id="documentación-externa-manual-de-usuario">Documentación externa. Manual de usuario.</h3>
+
+<h2 id="despliegue">Despliegue</h2>
+
+<h2 id="herramientas-de-apoyo">Herramientas de apoyo</h2>
+
+<h2 id="conclusiones">Conclusiones</h2>
+<p>Acceso a la memoria
+https://isabelmartiromeu.github.io/appnotificaciones</p>
+<h2 id="bibliografía">Bibliografía</h2>
+
+<h3 id="plantillas-jekyll-para-github">Plantillas Jekyll para Github</h3>
+
+<h4 id="httpspagesgithubcomthemes">https://pages.github.com/themes/</h4>
+
+
+
+      </section>
+      <footer>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+  </body>
+</html>
