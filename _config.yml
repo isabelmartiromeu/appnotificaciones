@@ -4,4 +4,8 @@ description: >- # this means to ignore newlines until "baseurl:"
   APP de Gestión de Tareas multi usuario. Sincronización de SQLite con la Nube. Interacción con API
 show_downloads: true
 google_analytics:
+<<<<<<< HEAD
 theme: jekyll-theme-leap-day
+=======
+theme: jekyll-theme-leap-day
+>>>>>>> ea672c332f1bea99a3761408365ad26a40d858ae
